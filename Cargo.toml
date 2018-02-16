@@ -4,3 +4,5 @@ version = "0.1.0"
 authors = ["yajamon <yajamon.tatsuki@gmail.com>"]
 
 [dependencies]
+zaif-api = "0.4.0"
+clap = "2.30.0"

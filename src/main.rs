@@ -1,10 +1,11 @@
+#[macro_use]
 extern crate clap;
 use clap::App;
 
 fn main() {
-    App::new("zacli")
-        .version("0.1.0")
-        .about("Zaif api client for command line interface")
-        .author("yajamon <yajamon.tatsuki@gmail.com>")
+    App::new(crate_name!())
+        .version(crate_version!())
+        .about(crate_description!())
+        .author(crate_authors!())
         .get_matches();
 }

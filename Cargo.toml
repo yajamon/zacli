@@ -2,6 +2,7 @@
 name = "zacli"
 version = "0.1.0"
 authors = ["yajamon <yajamon.tatsuki@gmail.com>"]
+description = "Zaif api client for command line interface"
 
 [dependencies]
 zaif-api = "0.4.0"

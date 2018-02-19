@@ -2,22 +2,12 @@
 extern crate clap;
 extern crate zaif_api;
 
-use clap::{Arg, SubCommand};
 use zaif_api::public_api::*;
 
+mod commands;
+
 fn main() {
-    let app = app_from_crate!()
-        .subcommand(
-            SubCommand::with_name("currencies")
-                .about("通貨情報を取得します")
-                .arg(Arg::with_name("NAME").help("通貨の名前")),
-        )
-        .subcommand(
-            SubCommand::with_name("depth")
-                .about("板情報を取得します")
-                .arg(Arg::with_name("CURRENCY_PAIR"))
-                .help("取引通貨の組み合わせ"),
-        );
+    let app = commands::define_subcommands(app_from_crate!());
 
     let matches = app.get_matches();
 

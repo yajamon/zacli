@@ -1,11 +1,11 @@
 extern crate clap;
 use clap::{App, Arg, SubCommand};
 
-use commands::Command;
+use commands::Define;
 
-pub struct Currencies;
+pub struct Command;
 
-impl Command for Currencies {
+impl Define for Command {
     fn define<'a, 'b>() -> App<'a, 'b> {
         SubCommand::with_name("currencies")
             .about("通貨情報を取得します")

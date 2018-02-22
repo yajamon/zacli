@@ -15,14 +15,15 @@ pub fn define_subcommands<'a, 'b>(cmd: App<'a, 'b>) -> App<'a, 'b> {
         .subcommand(depth::Command::define())
 }
 
+pub trait Run {
+    fn name<'a>() -> &'a str;
+    fn run<'a>(matches: &ArgMatches<'a>);
+}
+
 pub fn dispatch<'a>(matches: ArgMatches<'a>) {
-    if let Some(ref matches) = matches.subcommand_matches("currencies") {
-        let api = CurrenciesBuilder::new()
-            .name(matches.value_of("NAME").unwrap_or("all").to_string())
-            .finalize();
-        for currency in api.exec().unwrap() {
-            println!("{}", currency.name);
-        }
+    match matches.subcommand() {
+        (currencies::COMMAND_NAME, Some(sub_m)) => currencies::Command::run(sub_m),
+        _ => {}
     }
 
     if let Some(ref matches) = matches.subcommand_matches("depth") {

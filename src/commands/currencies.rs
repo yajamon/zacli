@@ -1,7 +1,8 @@
 extern crate clap;
-use clap::{App, Arg, ArgMatches, SubCommand};
 extern crate zaif_api;
-use self::zaif_api::public_api::*;
+
+use clap::{App, Arg, ArgMatches, SubCommand};
+use self::zaif_api::public_api::CurrenciesBuilder;
 
 use commands::{Define, Run};
 

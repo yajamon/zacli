@@ -1,7 +1,5 @@
 extern crate clap;
-extern crate zaif_api;
-use clap::{App, Arg, ArgMatches};
-use self::zaif_api::public_api::*;
+use clap::{App, ArgMatches};
 
 pub mod currencies;
 pub mod depth;
@@ -23,15 +21,7 @@ pub trait Run {
 pub fn dispatch<'a>(matches: ArgMatches<'a>) {
     match matches.subcommand() {
         (currencies::COMMAND_NAME, Some(sub_m)) => currencies::Command::run(sub_m),
+        (depth::COMMAND_NAME, Some(sub_m)) => depth::Command::run(sub_m),
         _ => {}
-    }
-
-    if let Some(ref matches) = matches.subcommand_matches("depth") {
-        let api = DepthBuilder::new()
-            .currency_pair(matches.value_of("CURRENCY_PAIR").unwrap().to_string())
-            .finalize();
-        for ask in api.exec().unwrap().asks {
-            println!("ask price: {}, amount: {}", ask.price(), ask.amount());
-        }
     }
 }

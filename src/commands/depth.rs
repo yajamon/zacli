@@ -27,8 +27,13 @@ impl Run for Command {
         let api = DepthBuilder::new()
             .currency_pair(matches.value_of("CURRENCY_PAIR").unwrap().to_string())
             .finalize();
-        for ask in api.exec().unwrap().asks {
-            println!("ask price: {}, amount: {}", ask.price(), ask.amount());
+        let result = api.exec().unwrap();
+        println!("type\tprice\tamount");
+        for ask in result.asks {
+            println!("ask\t{}\t{}", ask.price(), ask.amount());
+        }
+        for bid in result.bids {
+            println!("bid\t{}\t{}", bid.price(), bid.amount());
         }
     }
 }

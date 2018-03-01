@@ -2,6 +2,7 @@ extern crate clap;
 use clap::{App, ArgMatches};
 
 pub mod currencies;
+pub mod currency_pairs;
 pub mod depth;
 
 pub trait Define {
@@ -10,6 +11,7 @@ pub trait Define {
 
 pub fn define_subcommands<'a, 'b>(cmd: App<'a, 'b>) -> App<'a, 'b> {
     cmd.subcommand(currencies::Command::define())
+        .subcommand(currency_pairs::Command::define())
         .subcommand(depth::Command::define())
 }
 
@@ -21,6 +23,7 @@ pub trait Run {
 pub fn dispatch<'a>(matches: ArgMatches<'a>) {
     match matches.subcommand() {
         (currencies::COMMAND_NAME, Some(sub_m)) => currencies::Command::run(sub_m),
+        (currency_pairs::COMMAND_NAME, Some(sub_m)) => currency_pairs::Command::run(sub_m),
         (depth::COMMAND_NAME, Some(sub_m)) => depth::Command::run(sub_m),
         _ => {}
     }

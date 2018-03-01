@@ -25,8 +25,7 @@ impl Define for Command {
     fn define<'a, 'b>() -> App<'a, 'b> {
         SubCommand::with_name(COMMAND_NAME)
             .about("command description")
-            .arg(Arg::with_name("Argument_name"))
-            .help("command help")
+            .arg(Arg::with_name("Argument_name").help("command help"))
     }
 }
 

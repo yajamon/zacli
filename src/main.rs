@@ -2,6 +2,7 @@
 extern crate clap;
 
 mod commands;
+mod config;
 
 fn main() {
     let app = commands::define_subcommands(app_from_crate!());

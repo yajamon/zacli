@@ -13,8 +13,7 @@ impl Define for Command {
     fn define<'a, 'b>() -> App<'a, 'b> {
         SubCommand::with_name(COMMAND_NAME)
             .about("板情報を取得します")
-            .arg(Arg::with_name("CURRENCY_PAIR"))
-            .help("取引通貨の組み合わせ")
+            .arg(Arg::with_name("CURRENCY_PAIR").help("取引通貨の組み合わせ"))
     }
 }
 

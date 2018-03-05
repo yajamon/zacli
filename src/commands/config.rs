@@ -4,6 +4,7 @@ use std::env;
 use clap::{App, Arg, ArgMatches, SubCommand};
 
 use commands::{Define, Run};
+use config::Config;
 
 pub const COMMAND_NAME: &str = "config";
 pub struct Command;

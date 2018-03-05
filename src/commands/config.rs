@@ -4,7 +4,7 @@ use std::env;
 use clap::{App, Arg, ArgMatches, SubCommand};
 
 use commands::{Define, Run};
-use config::Config;
+use config;
 
 pub const COMMAND_NAME: &str = "config";
 pub struct Command;
@@ -22,7 +22,8 @@ impl Run for Command {
     }
 
     fn run<'a>(matches: &ArgMatches<'a>) {
-        let file_path = env::home_dir().unwrap();
-        println!("load {:?}", file_path.to_str().unwrap());
+        let file_path = config::default_path().unwrap();
+        let config = config::open_config(file_path.as_path()).unwrap();
+        println!("version {}", config["version"]);
     }
 }

@@ -1,5 +1,6 @@
 #[macro_use]
 extern crate clap;
+extern crate toml;
 
 mod error;
 mod commands;

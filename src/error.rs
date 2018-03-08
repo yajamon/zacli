@@ -3,6 +3,7 @@ pub enum Error {
     SimpleError(String),
     IoError(::std::io::Error),
     TomlDeserializeError(::toml::de::Error),
+    TomlSerializeError(::toml::ser::Error),
 }
 pub type Result<T> = ::std::result::Result<T, Error>;
 
@@ -20,5 +21,11 @@ impl From<::std::io::Error> for Error {
 impl From<::toml::de::Error> for Error {
     fn from(error: ::toml::de::Error) -> Self {
         Error::TomlDeserializeError(error)
+    }
+}
+
+impl From<::toml::ser::Error> for Error {
+    fn from(error: ::toml::ser::Error) -> Self {
+        Error::TomlSerializeError(error)
     }
 }

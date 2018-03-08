@@ -14,9 +14,9 @@ pub fn default_path() -> ::Result<PathBuf> {
     path.push(CONFIG_FILENAME);
     Ok(path)
 }
-pub fn open_config(path: &Path) -> ::Result<Value> {
+pub fn open_config(path: &Path) -> ::Result<Config> {
     let contents = load_contents(path)?;
-    let config = contents.as_str().parse::<Value>()?;
+    let config = migrate(convert_to_config(&contents)?);
     Ok(config)
 }
 
@@ -41,11 +41,19 @@ fn convert_to_config(contents: &str) -> ::Result<ConfigList> {
     Ok(config)
 }
 
+fn migrate(config: ConfigList) -> Config {
+    loop {
+        config = match config {
+            ConfigList::V01(c) => return c,
+        }
+    }
+}
+
 enum ConfigList {
     V01(Config_V01),
 }
 #[derive(Serialize, Deserialize)]
-struct Config_V01 {
+pub struct Config_V01 {
     pub version: u8,
     pub access_key: String,
     pub access_secret: String,

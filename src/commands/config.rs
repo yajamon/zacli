@@ -24,6 +24,6 @@ impl Run for Command {
     fn run<'a>(matches: &ArgMatches<'a>) {
         let file_path = config::default_path().unwrap();
         let config = config::open_config(file_path.as_path()).unwrap();
-        println!("version {}", config["version"]);
+        println!("version {}", config.version);
     }
 }

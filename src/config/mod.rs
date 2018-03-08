@@ -26,6 +26,23 @@ fn load_contents(path: &Path) -> ::Result<String> {
     file.read_to_string(&mut contents)?;
     Ok(contents)
 }
+
+fn convert_to_config(contents: &str) -> ::Result<ConfigList> {
+    let parsed = contents.parse::<Value>()?;
+    let version = parsed["version"]
+        .as_integer()
+        .ok_or("Missing version".to_string())?;
+    let config = match version {
+        1 => ConfigList::V01(parsed.try_into()?),
+        _ => return Err("Unknown config version".to_string().into()),
+    };
+    Ok(config)
+}
+
+enum ConfigList {
+    V01(Config_V01),
+}
+#[derive(Serialize, Deserialize)]
 struct Config_V01 {
     pub version: u8,
     pub access_key: String,

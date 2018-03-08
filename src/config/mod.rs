@@ -29,8 +29,10 @@ fn load_contents(path: &Path) -> ::Result<String> {
 
 fn convert_to_config(contents: &str) -> ::Result<ConfigList> {
     let parsed = contents.parse::<Value>()?;
-    let version = parsed["version"]
-        .as_integer()
+    let version = parsed
+        .as_table()
+        .and_then(|table| table.get("version"))
+        .and_then(|value| value.as_integer())
         .ok_or("Missing version".to_string())?;
     let config = match version {
         1 => ConfigList::V01(parsed.try_into()?),

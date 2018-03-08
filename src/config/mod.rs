@@ -76,7 +76,7 @@ fn migrate(config: ConfigList) -> Config {
 enum ConfigList {
     V01(ConfigV01),
 }
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct ConfigV01 {
     pub version: u8,
     pub access_key: String,

@@ -41,6 +41,5 @@ impl Run for Command {
             return;
         }
         let config = config::open_config(file_path.as_path()).unwrap();
-        println!("version {}", config.version);
     }
 }

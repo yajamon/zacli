@@ -6,9 +6,7 @@ use toml::Value;
 
 pub const CONFIG_FILENAME: &str = ".zacli.toml";
 
-pub struct Config {}
-
-impl Config {}
+pub type Config = Config_V01;
 
 pub fn default_path() -> ::Result<PathBuf> {
     let mut path = env::home_dir()
@@ -27,4 +25,9 @@ fn load_contents(path: &Path) -> ::Result<String> {
     let mut contents = String::new();
     file.read_to_string(&mut contents)?;
     Ok(contents)
+}
+struct Config_V01 {
+    pub version: u8,
+    pub access_key: String,
+    pub access_secret: String,
 }

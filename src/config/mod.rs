@@ -42,11 +42,14 @@ fn convert_to_config(contents: &str) -> ::Result<ConfigList> {
 }
 
 fn migrate(config: ConfigList) -> Config {
-    loop {
-        config = match config {
-            ConfigList::V01(c) => return c,
-        }
-    }
+    // 次のConfig versionが生まれたときに必要になるのだ
+    // loop {
+    //     config = match config {
+    //         ConfigList::V01(c) => return c,
+    //     }
+    // }
+    let ConfigList::V01(c) = config;
+    c
 }
 
 enum ConfigList {

@@ -17,9 +17,14 @@ pub fn default_path() -> ::Result<PathBuf> {
     Ok(path)
 }
 pub fn open_config(path: &Path) -> ::Result<Value> {
+    let contents = load_contents(path)?;
+    let config = contents.as_str().parse::<Value>()?;
+    Ok(config)
+}
+
+fn load_contents(path: &Path) -> ::Result<String> {
     let mut file = File::open(path)?;
     let mut contents = String::new();
     file.read_to_string(&mut contents)?;
-    let config = contents.as_str().parse::<Value>()?;
-    Ok(config)
+    Ok(contents)
 }

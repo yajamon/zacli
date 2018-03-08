@@ -33,7 +33,11 @@ impl Run for Command {
         if matches.is_present(ARG_INITIALISE) {
             let c = config::new();
             config::save_config(file_path.as_path(), &c).unwrap();
-            println!("設定ファイルを作成しました");
+            println!(
+                "設定ファイルを作成しました: {}",
+                file_path.to_str().unwrap()
+            );
+            println!("設定ファイルの権限を確認してください。");
             return;
         }
         let config = config::open_config(file_path.as_path()).unwrap();

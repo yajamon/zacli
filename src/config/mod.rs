@@ -6,7 +6,7 @@ use toml::Value;
 
 pub const CONFIG_FILENAME: &str = ".zacli.toml";
 
-pub type Config = Config_V01;
+pub type Config = ConfigV01;
 
 pub fn default_path() -> ::Result<PathBuf> {
     let mut path = env::home_dir()
@@ -50,10 +50,10 @@ fn migrate(config: ConfigList) -> Config {
 }
 
 enum ConfigList {
-    V01(Config_V01),
+    V01(ConfigV01),
 }
 #[derive(Serialize, Deserialize)]
-pub struct Config_V01 {
+pub struct ConfigV01 {
     pub version: u8,
     pub access_key: String,
     pub access_secret: String,

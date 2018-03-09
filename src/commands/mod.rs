@@ -5,6 +5,7 @@ pub mod currencies;
 pub mod currency_pairs;
 pub mod depth;
 pub mod config;
+pub mod trade;
 
 pub trait Define {
     fn define<'a, 'b>() -> App<'a, 'b>;
@@ -15,6 +16,7 @@ pub fn define_subcommands<'a, 'b>(cmd: App<'a, 'b>) -> App<'a, 'b> {
         .subcommand(currencies::Command::define())
         .subcommand(currency_pairs::Command::define())
         .subcommand(depth::Command::define())
+        .subcommand(trade::Command::define())
 }
 
 pub trait Run {
@@ -28,6 +30,7 @@ pub fn dispatch<'a>(matches: ArgMatches<'a>) {
         (currencies::COMMAND_NAME, Some(sub_m)) => currencies::Command::run(sub_m),
         (currency_pairs::COMMAND_NAME, Some(sub_m)) => currency_pairs::Command::run(sub_m),
         (depth::COMMAND_NAME, Some(sub_m)) => depth::Command::run(sub_m),
+        (trade::COMMAND_NAME, Some(sub_m)) => trade::Command::run(sub_m),
         _ => {}
     }
 }

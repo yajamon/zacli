@@ -2,23 +2,26 @@
 
 readonly ROOT_DIR=$(cd $(dirname $(dirname $BASH_SOURCE)); pwd)
 readonly COMMANDS_DIR="$ROOT_DIR/src/commands"
-readonly COMMAND_NAME=$1
 
+readonly COMMAND_NAME=$1
 if [ -z $COMMAND_NAME ]; then
     echo 'Require command name' >&2
     exit 1
 fi
+
+readonly COMMAND_NAME_SNAKE=$(echo $COMMAND_NAME | sed -r -e 's/^([A-Z])/\L\1\E/' -e 's/([A-Z])/_\L\1\E/g')
+readonly COMMAND_NAME_PASCAL=$(echo $COMMAND_NAME_SNAKE | sed -r -e 's/(^|_)(.)/\U\2\E/g')
 
 cat << EOT
 extern crate clap;
 extern crate zaif_api;
 
 use clap::{App, Arg, ArgMatches, SubCommand};
-use self::zaif_api::public_api::${COMMAND_NAME}Builder;
+use self::zaif_api::public_api::${COMMAND_NAME_PASCAL}Builder;
 
 use commands::{Define, Run};
 
-pub const COMMAND_NAME: &str = "${COMMAND_NAME}";
+pub const COMMAND_NAME: &str = "${COMMAND_NAME_SNAKE}";
 pub struct Command;
 
 impl Define for Command {
@@ -35,7 +38,7 @@ impl Run for Command {
     }
 
     fn run<'a>(matches: &ArgMatches<'a>) {
-        let api = ${COMMAND_NAME}Builder::new()
+        let api = ${COMMAND_NAME_PASCAL}Builder::new()
             .finalize();
         let result = api.exec().unwrap();
         println!("{}", "result...");

@@ -9,7 +9,7 @@ if [ -z $COMMAND_NAME ]; then
     exit 1
 fi
 
-readonly COMMAND_NAME_SNAKE=$(echo $COMMAND_NAME | perl -e '$_ = <STDIN>; s/^([A-Z])/\L\1\E/; print $_' | perl -e '$_ = <STDIN>; s/([A-Z])/_\L\1\E/g; print $_')
+readonly COMMAND_NAME_SNAKE=$(echo $COMMAND_NAME | perl -e '$_ = <STDIN>; s/^([A-Z])/\L\1\E/; s/([A-Z])/_\L\1\E/g; print $_')
 readonly COMMAND_NAME_PASCAL=$(echo $COMMAND_NAME_SNAKE | perl -e '$_ = <STDIN>; s/(^|_)(.)/\U\2\E/g; print $_')
 
 cat << EOT

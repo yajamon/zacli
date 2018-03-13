@@ -52,5 +52,6 @@ depthの結果は`type`, `price`, `amount`の順で表示されます。
 これより高い価格で買い注文を出せば、成行注文が成立します。
 
 ```sh
-zacli trade zaif_jpy bid 2.0 10  # 2.0 JPY で数 10 の買い注文を発行します
+# 2.0 JPY で数 10 の買い注文を発行します
+zacli trade zaif_jpy bid 2.0 10
 ```

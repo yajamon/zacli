@@ -80,6 +80,9 @@ impl Run for Command {
         }
 
         let result = api.finalize().exec().unwrap();
-        println!("{}", "result...");
+        println!(
+            "約定数: {}, 板登録数: {}",
+            result.received, result.remains
+        );
     }
 }

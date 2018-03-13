@@ -3,7 +3,7 @@ extern crate zaif_api;
 
 use clap::{App, Arg, ArgMatches, SubCommand};
 use self::zaif_api::AccessKey;
-use self::zaif_api::trade_api::TradeBuilder;
+use self::zaif_api::trade_api::{TradeAction, TradeBuilder};
 
 use commands::{Define, Run};
 use config;
@@ -12,6 +12,7 @@ pub const COMMAND_NAME: &str = "trade";
 pub struct Command;
 
 const ARG_CURRENCY_PAIR: &str = "CURRENCY_PAIR";
+const ARG_ACTION: &str = "ACTION";
 
 impl Define for Command {
     fn define<'a, 'b>() -> App<'a, 'b> {
@@ -21,6 +22,12 @@ impl Define for Command {
                 Arg::with_name(ARG_CURRENCY_PAIR)
                     .required(true)
                     .help("取引する通貨ペア"),
+            )
+            .arg(
+                Arg::with_name(ARG_ACTION)
+                    .required(true)
+                    .possible_values(&["ask", "bid"])
+                    .help("取引の種類 ask:買い注文 bid:売り注文"),
             )
     }
 }
@@ -34,9 +41,16 @@ impl Run for Command {
         let file_path = config::default_path().unwrap();
         let config = config::open_config(file_path.as_path()).unwrap();
 
+        let action = match matches.value_of(ARG_ACTION).unwrap() {
+            "ask" => TradeAction::Ask,
+            "bid" => TradeAction::Bid,
+            _ => TradeAction::None,
+        };
+
         let mut api = TradeBuilder::new()
             .access_key(AccessKey::new(&config.access_key, &config.access_secret))
             .currency_pair(matches.value_of(ARG_CURRENCY_PAIR).unwrap().to_string())
+            .action(action)
             .finalize();
 
         let result = api.exec().unwrap();

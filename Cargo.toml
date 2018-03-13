@@ -4,9 +4,9 @@ version = "0.1.0"
 authors = ["yajamon <yajamon.tatsuki@gmail.com>"]
 description = "Zaif api client for command line interface"
 
-licence = "MIT"
+license = "MIT"
 readme = "README.md"
-repository = "https://github.com/yajamon/zacli"
+repository = "https://github.com/yajamon/zacli.git"
 keywords = ["zaif", "api", "cli"]
 
 [dependencies]

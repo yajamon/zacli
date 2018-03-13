@@ -28,7 +28,7 @@ impl Define for Command {
                 Arg::with_name(ARG_ACTION)
                     .required(true)
                     .possible_values(&["ask", "bid"])
-                    .help("取引の種類 ask:買い注文 bid:売り注文"),
+                    .help("取引の種類 ask:売り注文 bid:買い注文"),
             )
             .arg(
                 Arg::with_name(ARG_AMOUNT)

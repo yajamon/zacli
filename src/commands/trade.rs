@@ -14,6 +14,7 @@ pub struct Command;
 const ARG_CURRENCY_PAIR: &str = "CURRENCY_PAIR";
 const ARG_ACTION: &str = "ACTION";
 const ARG_AMOUNT: &str = "AMOUNT";
+const ARG_PRICE: &str = "PRICE";
 
 impl Define for Command {
     fn define<'a, 'b>() -> App<'a, 'b> {
@@ -29,6 +30,12 @@ impl Define for Command {
                     .required(true)
                     .possible_values(&["ask", "bid"])
                     .help("取引の種類 ask:売り注文 bid:買い注文"),
+            )
+            .arg(
+                Arg::with_name(ARG_PRICE)
+                    .required(true)
+                    .takes_value(true)
+                    .help("取引の単価"),
             )
             .arg(
                 Arg::with_name(ARG_AMOUNT)
@@ -59,6 +66,7 @@ impl Run for Command {
             .currency_pair(matches.value_of(ARG_CURRENCY_PAIR).unwrap().to_string())
             .action(action)
             .amount(matches.value_of(ARG_AMOUNT).unwrap().parse().unwrap())
+            .price(matches.value_of(ARG_PRICE).unwrap().parse().unwrap())
             .finalize();
 
         let result = api.exec().unwrap();

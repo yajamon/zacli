@@ -5,6 +5,12 @@
 [Rust製のAPI Wrapper](https://github.com/yajamon/zaif-api-rust)を作ったので、シンプルなクライアントも必要ですよね、ということで。
 チャートは公式サイトで確認しつつ売買注文はAPIから、というのもありかと。
 
+## インストール方法
+
+```sh
+cargo install zacli
+```
+
 ## 使い方
 
 以下はコマンドの一部です。`zacli help`ですべてのコマンドが確認できます。

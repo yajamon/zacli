@@ -12,8 +12,8 @@ pub struct Command;
 impl Define for Command {
     fn define<'a, 'b>() -> App<'a, 'b> {
         SubCommand::with_name(COMMAND_NAME)
-            .about("板情報を取得します")
-            .arg(Arg::with_name("CURRENCY_PAIR").help("取引通貨の組み合わせ"))
+            .about("板情報を取得します\n結果は'type', 'price', 'amount'の順に出力され\n売り注文はpriceが低いもの、買い注文はpriceが高いものから順に表示されます")
+            .arg(Arg::with_name("CURRENCY_PAIR").required(true).help("取引通貨の組み合わせ"))
     }
 }
 

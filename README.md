@@ -22,6 +22,17 @@ zacli depth <CURRENCY_PAIR>
 zacli trade <CURRENCY_PAIR> <ACTION> <AMOUNT> <PRICE>
 ```
 
+### API Keyをzacliに教える
+
+`trade`など、一部のコマンドにはAPIアクセスキー、シークレットが必要です。
+zacliがこれらを知る手段として設定ファイルを採用しています。
+
+設定ファイルは次のコマンドで生成できます。
+
+`zacli config --init`
+
+ホームディレクトリに`.zacli.toml`が生成されているので、APIアクセスキー、シークレットを差し替えてください。
+
 ### 成行注文をする
 
 `zaif_jpy`の成行の買い注文をするとします。

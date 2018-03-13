@@ -33,7 +33,6 @@ impl Define for Command {
             .arg(
                 Arg::with_name(ARG_AMOUNT)
                     .required(true)
-                    .long("amount")
                     .takes_value(true)
                     .help("取引する数量"),
             )

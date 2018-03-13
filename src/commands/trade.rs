@@ -15,6 +15,7 @@ const ARG_CURRENCY_PAIR: &str = "CURRENCY_PAIR";
 const ARG_ACTION: &str = "ACTION";
 const ARG_AMOUNT: &str = "AMOUNT";
 const ARG_PRICE: &str = "PRICE";
+const ARG_LIMIT: &str = "LIMIT";
 
 impl Define for Command {
     fn define<'a, 'b>() -> App<'a, 'b> {
@@ -43,6 +44,12 @@ impl Define for Command {
                     .takes_value(true)
                     .help("取引する数量"),
             )
+            .arg(
+                Arg::with_name(ARG_LIMIT)
+                    .long("limit")
+                    .takes_value(true)
+                    .help("リミット単価"),
+            )
     }
 }
 
@@ -61,15 +68,18 @@ impl Run for Command {
             _ => TradeAction::None,
         };
 
-        let mut api = TradeBuilder::new()
-            .access_key(AccessKey::new(&config.access_key, &config.access_secret))
+        let api = &mut TradeBuilder::new();
+        api.access_key(AccessKey::new(&config.access_key, &config.access_secret))
             .currency_pair(matches.value_of(ARG_CURRENCY_PAIR).unwrap().to_string())
             .action(action)
             .amount(matches.value_of(ARG_AMOUNT).unwrap().parse().unwrap())
-            .price(matches.value_of(ARG_PRICE).unwrap().parse().unwrap())
-            .finalize();
+            .price(matches.value_of(ARG_PRICE).unwrap().parse().unwrap());
 
-        let result = api.exec().unwrap();
+        if let Some(limit) = matches.value_of(ARG_LIMIT) {
+            api.limit(Some(limit.parse().unwrap()));
+        }
+
+        let result = api.finalize().exec().unwrap();
         println!("{}", "result...");
     }
 }

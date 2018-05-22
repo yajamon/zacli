@@ -7,25 +7,19 @@ pub enum Error {
 }
 pub type Result<T> = ::std::result::Result<T, Error>;
 
-impl From<String> for Error {
-    fn from(error: String) -> Self {
-        Error::SimpleError(error)
-    }
-}
-impl From<::std::io::Error> for Error {
-    fn from(error: ::std::io::Error) -> Self {
-        Error::IoError(error)
-    }
-}
-
-impl From<::toml::de::Error> for Error {
-    fn from(error: ::toml::de::Error) -> Self {
-        Error::TomlDeserializeError(error)
+macro_rules! impl_from_for_errors {
+    ($($id:ident : $type:ty => $translate:block),*) => {
+        $(
+            impl From<$type> for Error {
+                fn from($id: $type) -> Self $translate
+            }
+        )*
     }
 }
 
-impl From<::toml::ser::Error> for Error {
-    fn from(error: ::toml::ser::Error) -> Self {
-        Error::TomlSerializeError(error)
-    }
-}
+impl_from_for_errors!(
+    error: String => { Error::SimpleError(error) },
+    error: ::std::io::Error => { Error::IoError(error) },
+    error: ::toml::de::Error => { Error::TomlDeserializeError(error) },
+    error: ::toml::ser::Error => { Error::TomlSerializeError(error) }
+);
